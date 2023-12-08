@@ -1,0 +1,29 @@
+<div class="header">
+    <div class="top">
+        <h3>SCORE: 5</h3>
+        <button routerLink="/">Return to Home</button>
+    </div>
+    <h1>Guess the Artist!</h1>
+</div>
+<div class="body">
+    <div class="songs"> 
+        <!-- Add Song Component here to generate songs based on:
+            1. The number chosen on Home Page
+            2. *ngFor(song in songs) {{ song }}
+        -->
+        <h4>Song 1: Song name</h4><img src="./assets/play-button.svg"/>
+        <h4>Song 2: Song name</h4><img src="./assets/play-button.svg"/>
+        <h4>Song 3: Song name</h4><img src="./assets/play-button.svg"/>
+    </div>
+    
+    <h4>Which Artist?</h4>
+    <div class="artists"> 
+        <!-- Add Artist Component here to generate artists based on:
+            1. The number chosen on Home Page
+            2. *ngFor(artist in artists) {{ Artist }}
+        -->
+        <button (click)="onSubmit()">Artist 1</button>
+        <button (click)="onSubmit()">Artist 2</button>
+        <button (click)="onSubmit()">Artist 3</button>
+    </div>
+</div>

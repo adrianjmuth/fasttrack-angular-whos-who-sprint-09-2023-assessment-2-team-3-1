@@ -1,0 +1,61 @@
+<body>
+  <div class="header">
+    <h1>Welcome to Who's Who, the Artist Guessing Game</h1>
+  </div>
+  <div class="helper-text" style="justify-content: center;">
+    <ul>
+      <li><h3>Please configure your settings before starting the game.</h3></li>
+      <li><h3>Select a Genre of Music. Select how many songs you want shown each round, as well as how many Artist options are shown each round.</h3></li>
+      <li><h3>Once your satisfied with your settings, press Play! and enjoy!</h3></li>
+    </ul>
+  </div>
+  <div class="container">
+    <form class="form" [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
+      <div *ngIf="(authLoading || configLoading) && false">Loading...</div>
+      <div *ngIf="(!authLoading && !configLoading) || true">
+        <div class="input-group">
+          <div class="label-input-group">
+            <label for="genre"><b>Genre:</b></label>
+            <select id="genre" [ngStyle]="{'border': settingsForm.controls['genre'].errors && settingsForm.controls['genre'].touched ? '3px solid red' : ''}" [(ngModel)]="this.userSettings.genre" (ngModelChange)="setGenre($event)" formControlName="genre">
+              <option value="" disabled selected>Choose a genre...</option>
+              <option [value]="genre" *ngFor="let genre of genres">
+                {{ genre }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="input-group">
+          <div class="label-input-group">
+            <label for="artist"><b>Artists:</b></label>
+            <input id="artist" [ngStyle]="{'border': settingsForm.controls['numArtists'].errors && settingsForm.controls['numArtists'].touched ? '3px solid red' : ''}" placeholder="Enter Number of Artists" formControlName="numArtists">
+          </div>
+        </div>
+        <div class="input-group">
+          <div class="label-input-group">
+            <label for="songs"><b>Songs:</b></label>
+            <input id="songs" [ngStyle]="{'border': settingsForm.controls['numSongs'].errors && settingsForm.controls['numSongs'].touched ? '3px solid red' : ''}" placeholder="Enter Number of Songs" formControlName="numSongs">
+          </div>
+        </div>
+      </div>
+      <div class="button-container">
+        <button [disabled]="settingsForm.invalid" [ngClass]="settingsForm.invalid ? 'disabled' : ''" >Play!</button> <!--routerLink="/game" -->
+        <div style="color: red; font-size: 30px;" *ngIf="error">{{ error }}</div>
+      </div>
+    </form>
+  </div>
+  <div class="errors">
+    <ng-container *ngIf="(settingsForm.controls['genre'].dirty || settingsForm.controls['genre'].touched) && settingsForm.controls['genre'].errors">
+      <div *ngIf="settingsForm.controls['genre'].errors['required']" class="errors">- Please select a genre</div>
+    </ng-container>
+    <ng-container *ngIf="(settingsForm.controls['numArtists'].dirty || settingsForm.controls['numArtists'].touched) && settingsForm.controls['numArtists'].errors">
+      <div *ngIf="settingsForm.controls['numArtists'].errors['required']" class="errors">- Please Input how many artists to choose from</div>
+      <div *ngIf="settingsForm.controls['numArtists'].errors['min']" class="errors">- Number of Artists needs to be greater than 0</div>
+      <div *ngIf="settingsForm.controls['numArtists'].errors['max']" class="errors">- Number of Artists needs to be 4 or less</div>
+    </ng-container>
+    <ng-container *ngIf="(settingsForm.controls['numSongs'].dirty || settingsForm.controls['numSongs'].touched) && settingsForm.controls['numSongs'].errors">
+      <div *ngIf="settingsForm.controls['numSongs'].errors['required']" class="errors">- Please Input how many songs to choose from</div>
+      <div *ngIf="settingsForm.controls['numSongs'].errors['min']" class="errors">- Number of songs needs to be greater than 0</div>
+      <div *ngIf="settingsForm.controls['numSongs'].errors['max']" class="errors">- Number of songs needs to be 4 or less</div>
+    </ng-container>
+  </div>
+</body>
